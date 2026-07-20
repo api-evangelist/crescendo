@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/crescendo-platform-openapi-original.json
+docs: https://docs.crescendo.ai/api-reference/introduction
+notes: >
+  Bearer API key. Send `Authorization: Bearer $CRESCENDO_API_KEY` (preferred) or
+  `?bearer_token=$CRESCENDO_API_KEY`. API keys are tenant-scoped and carry
+  prefix:resource.action scopes (e.g. provisioning:users.read, mcp:bots.*).
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - query
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: API Key
+  sources:
+  - openapi/crescendo-platform-openapi-original.json
+- name: bearerTokenQuery
+  type: apiKey
+  in: query
+  parameter: bearer_token
+  description: Alternative to the Authorization header. Prefer the Authorization header whenever
+    possible.
+  sources:
+  - openapi/crescendo-platform-openapi-original.json
