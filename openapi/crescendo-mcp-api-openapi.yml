@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  title: Crescendo Platform MCP API
+  version: 1.6.0
+  description: Public HTTP API for the Crescendo platform.
+servers:
+- url: https://platform.crescendo.ai
+security:
+- bearerAuth: []
+- bearerTokenQuery: []
+tags:
+- name: MCP
+  description: Model Context Protocol (MCP) endpoints.
+paths:
+  /api/v1/mcp/tenants/{tenantId}/bots:
+    post:
+      tags:
+      - MCP
+      summary: MCP bots endpoint (Streamable HTTP)
+      description: Streamable HTTP endpoint for the Bots MCP server. Requests and responses use JSON-RPC 2.0.
+      operationId: mcpBots
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpJsonRpcRequest'
+            examples:
+              toolsList:
+                value:
+                  jsonrpc: '2.0'
+                  id: tools
+                  method: tools/list
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpJsonRpcResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    McpJsonRpcRequest:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          type:
+          - string
+          - number
+          - 'null'
+        method:
+          type: string
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - jsonrpc
+      - method
+    McpJsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          type:
+          - string
+          - number
+          - 'null'
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        error:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - jsonrpc
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+  responses:
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+          examples:
+            example:
+              value:
+                message: Internal Server Error
+  parameters:
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+    bearerTokenQuery:
+      type: apiKey
+      in: query
+      name: bearer_token
+      description: Alternative to the Authorization header. Prefer the Authorization header whenever possible.

@@ -1,0 +1,426 @@
+openapi: 3.1.0
+info:
+  title: Crescendo Platform MCP Provisioning API
+  version: 1.6.0
+  description: Public HTTP API for the Crescendo platform.
+servers:
+- url: https://platform.crescendo.ai
+security:
+- bearerAuth: []
+- bearerTokenQuery: []
+tags:
+- name: Provisioning
+  description: Tenant-scoped provisioning resources.
+paths:
+  /api/v1/provisioning/tenants/{tenantId}:
+    get:
+      tags:
+      - Provisioning
+      summary: Get a provisioning document
+      description: Reads a single tenant-scoped provisioning document.
+      operationId: getProvisioningTenant
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      responses:
+        '200':
+          description: Provisioning document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - Provisioning
+      summary: Create or replace a provisioning document (POST = replace)
+      description: Creates a document if it does not exist, otherwise replaces the existing document (POST = replace).
+      operationId: postProvisioningTenant
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Replaced (existing document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '201':
+          description: Created (new document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+    put:
+      tags:
+      - Provisioning
+      summary: Update a provisioning document (PUT = merge update)
+      description: Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+      operationId: putProvisioningTenant
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/provisioning/tenants/{tenantId}/{collection}:
+    get:
+      tags:
+      - Provisioning
+      summary: List a provisioning collection
+      description: Reads a collection and returns an array of `{ id, data }` objects.
+      operationId: listProvisioningCollection
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      responses:
+        '200':
+          description: Collection entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningCollectionResponse'
+              examples:
+                example:
+                  value:
+                  - id: user-001
+                    data:
+                      email: owner@alpha.test
+                      role: owner
+                  - id: user-002
+                    data:
+                      email: viewer@alpha.test
+                      role: viewer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+  /api/v1/provisioning/tenants/{tenantId}/{collection}/{docId}:
+    get:
+      tags:
+      - Provisioning
+      summary: Get a provisioning document by ID
+      description: Reads a single document at the provided path.
+      operationId: getProvisioningDocument
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      responses:
+        '200':
+          description: Provisioning document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - Provisioning
+      summary: Create or replace a provisioning document (POST = replace)
+      description: Creates a document if it does not exist, otherwise replaces the existing document (POST = replace).
+      operationId: postProvisioningDocument
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Replaced (existing document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '201':
+          description: Created (new document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+    put:
+      tags:
+      - Provisioning
+      summary: Update a provisioning document (PUT = merge update)
+      description: Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+      operationId: putProvisioningDocument
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/provisioning/tenants/{tenantId}/{collection}/{docId}/versions/current:
+    get:
+      tags:
+      - Provisioning
+      summary: Get the current version document
+      description: Reads the `versions/current` document for a versioned resource.
+      operationId: getProvisioningVersionCurrent
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      responses:
+        '200':
+          description: Current version document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - Provisioning
+      summary: Create or replace the current version document (POST = replace)
+      description: Creates or replaces the `versions/current` document (POST = replace).
+      operationId: postProvisioningVersionCurrent
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Replaced (existing document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '201':
+          description: Created (new document)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+    put:
+      tags:
+      - Provisioning
+      summary: Update the current version document (PUT = merge update)
+      description: Updates an existing `versions/current` document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+      operationId: putProvisioningVersionCurrent
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/collection'
+      - $ref: '#/components/parameters/docId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisioningDocument'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisioningDocument'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    collection:
+      name: collection
+      in: path
+      required: true
+      description: 'Collection name under the tenant (for example: `users`, `bots`, `jobs`).'
+      schema:
+        type: string
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
+    docId:
+      name: docId
+      in: path
+      required: true
+      description: Document identifier within the collection.
+      schema:
+        type: string
+  schemas:
+    ProvisioningCollectionEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+      required:
+      - id
+      - data
+    ProvisioningDocument:
+      type: object
+      description: Arbitrary JSON object representing the provisioning resource.
+      additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    ProvisioningCollectionResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProvisioningCollectionEntry'
+  responses:
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: NotFound
+                message: Resource not found
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+    bearerTokenQuery:
+      type: apiKey
+      in: query
+      name: bearer_token
+      description: Alternative to the Authorization header. Prefer the Authorization header whenever possible.

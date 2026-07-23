@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: Crescendo Platform MCP Service API
+  version: 1.6.0
+  description: Public HTTP API for the Crescendo platform.
+servers:
+- url: https://platform.crescendo.ai
+security:
+- bearerAuth: []
+- bearerTokenQuery: []
+tags:
+- name: Service
+  description: Service metadata and health.
+paths:
+  /:
+    get:
+      tags:
+      - Service
+      summary: Get service info
+      description: Returns basic service metadata (name and version).
+      security: []
+      responses:
+        '200':
+          description: Service info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+              examples:
+                example:
+                  value:
+                    name: platform-api-service
+                    version: 1.6.0
+  /health:
+    get:
+      tags:
+      - Service
+      summary: Health check
+      description: Returns `ok` when the service is up.
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+              examples:
+                example:
+                  value:
+                    status: ok
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+    ServiceInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+      required:
+      - name
+      - version
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+    bearerTokenQuery:
+      type: apiKey
+      in: query
+      name: bearer_token
+      description: Alternative to the Authorization header. Prefer the Authorization header whenever possible.

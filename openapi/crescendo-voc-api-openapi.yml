@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: Crescendo Platform MCP VOC API
+  version: 1.6.0
+  description: Public HTTP API for the Crescendo platform.
+servers:
+- url: https://platform.crescendo.ai
+security:
+- bearerAuth: []
+- bearerTokenQuery: []
+tags:
+- name: VOC
+  description: Upload recordings for VOC processing.
+paths:
+  /api/v1/voc/tenants/{tenantId}/recording:
+    post:
+      tags:
+      - VOC
+      summary: Upload a recording for VOC processing
+      description: Uploads an audio file and metadata, then starts an asynchronous VOC job.
+      operationId: uploadVocRecording
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VocUploadForm'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocUploadAcceptedResponse'
+              examples:
+                example:
+                  value:
+                    id: job-voc-001
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/v1/voc/tenants/{tenantId}/recording/{jobId}/status:
+    get:
+      tags:
+      - VOC
+      summary: Get VOC job status
+      description: Returns the latest known status for a VOC recording job.
+      operationId: getVocJobStatus
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/jobId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocJobStatus'
+              examples:
+                started:
+                  value:
+                    id: job-voc-001
+                    status: started
+                    started: 1769557000000
+                    file: tenant-alpha/ingest/queue/uploads/call-123.mp3
+                    recordingId: call-123
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    VocUploadForm:
+      type: object
+      properties:
+        audio:
+          type: string
+          format: binary
+          description: Audio file (mp3 or wav).
+        file:
+          type: string
+          format: binary
+          description: Alternative field name for the audio file (mp3 or wav).
+        metadata:
+          type: string
+          description: JSON string containing recording metadata. Must include `id`.
+      required:
+      - metadata
+    VocUploadAcceptedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    VocJobStatus:
+      type: object
+      description: VOC job status payload. Fields may vary depending on job stage.
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - started
+          - completed
+          - failed
+        started:
+          type: integer
+          format: int64
+        finished:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        file:
+          type:
+          - string
+          - 'null'
+        recordingId:
+          type:
+          - string
+          - 'null'
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        error:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - status
+      - started
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+  parameters:
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      description: VOC job execution identifier returned by the upload endpoint.
+      schema:
+        type: string
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
+  responses:
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: NotFound
+                message: Resource not found
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+          examples:
+            example:
+              value:
+                message: Internal Server Error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+    bearerTokenQuery:
+      type: apiKey
+      in: query
+      name: bearer_token
+      description: Alternative to the Authorization header. Prefer the Authorization header whenever possible.

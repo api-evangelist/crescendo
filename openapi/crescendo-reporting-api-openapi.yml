@@ -1,0 +1,535 @@
+openapi: 3.1.0
+info:
+  title: Crescendo Platform MCP Reporting API
+  version: 1.6.0
+  description: Public HTTP API for the Crescendo platform.
+servers:
+- url: https://platform.crescendo.ai
+security:
+- bearerAuth: []
+- bearerTokenQuery: []
+tags:
+- name: Reporting
+  description: Reporting-friendly exports (cursor pagination).
+paths:
+  /api/v1/reporting/tenants/{tenantId}/assistant/conversations:
+    get:
+      tags:
+      - Reporting
+      summary: List assistant conversations (reporting format)
+      description: Returns assistant conversations in a reporting-friendly row format (no message content, cursor pagination).
+      operationId: listReportingBotConversations
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/reportingLimit'
+      - $ref: '#/components/parameters/reportingCursor'
+      - $ref: '#/components/parameters/reportingRange'
+      - $ref: '#/components/parameters/reportingFrom'
+      - $ref: '#/components/parameters/reportingTo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BotConversationReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/v1/reporting/tenants/{tenantId}/voc/conversations:
+    get:
+      tags:
+      - Reporting
+      summary: List VOC conversations (reporting format)
+      description: Returns VOC conversations in a reporting-friendly row format (no transcript content, cursor pagination).
+      operationId: listReportingVocConversations
+      parameters:
+      - $ref: '#/components/parameters/tenantId'
+      - $ref: '#/components/parameters/reportingLimit'
+      - $ref: '#/components/parameters/reportingCursor'
+      - $ref: '#/components/parameters/reportingRange'
+      - $ref: '#/components/parameters/reportingFrom'
+      - $ref: '#/components/parameters/reportingTo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocConversationReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+components:
+  schemas:
+    BotConversationRow:
+      type: object
+      description: Reporting row for a assistant conversation. Keys are optimized for reporting/exports.
+      properties:
+        ID:
+          type:
+          - string
+          - 'null'
+        TenantID:
+          type:
+          - string
+          - 'null'
+        BotID:
+          type:
+          - string
+          - 'null'
+        BotName:
+          type:
+          - string
+          - 'null'
+        Datetime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch milliseconds.
+        EndDatetime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch milliseconds.
+        DatetimeUTC:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        EndDatetimeUTC:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+          description: Duration in seconds.
+        Escalated:
+          type:
+          - boolean
+          - 'null'
+        escalatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch milliseconds from `state.escalatedAt`.
+        CSat:
+          type:
+          - number
+          - 'null'
+        AgentName:
+          type:
+          - string
+          - 'null'
+        AgentId:
+          type:
+          - string
+          - integer
+          - 'null'
+        AgentEmail:
+          type:
+          - string
+          - 'null'
+        Category:
+          type:
+          - string
+          - 'null'
+        Subcategory:
+          type:
+          - string
+          - 'null'
+        Tertiary:
+          type:
+          - string
+          - 'null'
+        RemoteIp:
+          type:
+          - string
+          - 'null'
+        userAgent:
+          type:
+          - string
+          - 'null'
+        Referrer:
+          type:
+          - string
+          - 'null'
+        Media:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Summary:
+          type:
+          - string
+          - 'null'
+        Handoff Reason:
+          type:
+          - string
+          - 'null'
+        ticketId:
+          type:
+          - string
+          - integer
+          - 'null'
+        ticketUrl:
+          type:
+          - string
+          - 'null'
+        ticketKind:
+          type:
+          - string
+          - 'null'
+        Input:
+          type:
+          - string
+          - 'null'
+        Contact Name:
+          type:
+          - string
+          - 'null'
+        Contact Email:
+          type:
+          - string
+          - 'null'
+        Contact Phone:
+          type:
+          - string
+          - 'null'
+      required:
+      - ID
+      - TenantID
+      - BotID
+      - BotName
+      - Datetime
+      - EndDatetime
+      - DatetimeUTC
+      - EndDatetimeUTC
+      - Duration
+    VocConversationRow:
+      type: object
+      description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
+      properties:
+        ID:
+          type:
+          - string
+          - 'null'
+        TenantID:
+          type:
+          - string
+          - 'null'
+        Datetime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        DatetimeUTC:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        Duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        Direction:
+          type:
+          - string
+          - 'null'
+        Media:
+          type:
+          - string
+          - 'null'
+        AgentName:
+          type:
+          - string
+          - 'null'
+        AgentId:
+          type:
+          - string
+          - integer
+          - 'null'
+        AgentEmail:
+          type:
+          - string
+          - 'null'
+        CustomerName:
+          type:
+          - string
+          - 'null'
+        CustomerId:
+          type:
+          - string
+          - integer
+          - 'null'
+        CustomerEmail:
+          type:
+          - string
+          - 'null'
+        Groups:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Tags:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Category:
+          type:
+          - string
+          - 'null'
+        Subcategory:
+          type:
+          - string
+          - 'null'
+        Tertiary:
+          type:
+          - string
+          - 'null'
+        CategoryExplanation:
+          type:
+          - string
+          - 'null'
+        CategoriesId:
+          type:
+          - string
+          - 'null'
+        Summary:
+          type:
+          - string
+          - 'null'
+        CSat:
+          type:
+          - number
+          - 'null'
+        CSatExplanation:
+          type:
+          - string
+          - 'null'
+        Sentiment:
+          type:
+          - number
+          - 'null'
+        SentimentExplanation:
+          type:
+          - string
+          - 'null'
+        Problems:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        KPIs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        SourceSystem:
+          type:
+          - string
+          - 'null'
+        TicketId:
+          type:
+          - string
+          - integer
+          - 'null'
+        TicketUrl:
+          type:
+          - string
+          - 'null'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    VocConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VocConversationRow'
+      required:
+      - total
+      - cursor
+      - data
+    ReportingCursor:
+      type: object
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+      required:
+      - next
+    BotConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotConversationRow'
+      required:
+      - total
+      - cursor
+      - data
+  responses:
+    Unavailable:
+      description: Upstream dependency unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unavailable
+                message: Elastic search failed
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+  parameters:
+    reportingFrom:
+      name: from
+      in: query
+      required: false
+      description: Range start. Accepts an ISO 8601 timestamp or epoch milliseconds.
+      schema:
+        oneOf:
+        - type: integer
+          format: int64
+          description: Epoch milliseconds.
+        - type: string
+          format: date-time
+          description: ISO 8601 timestamp.
+    reportingCursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
+      schema:
+        type: string
+    reportingRange:
+      name: range
+      in: query
+      required: false
+      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
+      schema:
+        type: string
+        enum:
+        - last_day
+        - last_week
+        - last_month
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
+    reportingTo:
+      name: to
+      in: query
+      required: false
+      description: Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now.
+      schema:
+        oneOf:
+        - type: integer
+          format: int64
+          description: Epoch milliseconds.
+        - type: string
+          format: date-time
+          description: ISO 8601 timestamp.
+    reportingLimit:
+      name: limit
+      in: query
+      required: false
+      description: Max results per page. Default `1000`, max `5000`.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 5000
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+    bearerTokenQuery:
+      type: apiKey
+      in: query
+      name: bearer_token
+      description: Alternative to the Authorization header. Prefer the Authorization header whenever possible.
