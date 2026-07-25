@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/crescendo-platform-openapi-original.json
+skills:
+  - file: crescendo-manage-provisioning.md
+    name: Manage Crescendo provisioning documents
+    api: openapi/crescendo-platform-openapi-original.json
+    operations: [listProvisioningCollection, getProvisioningDocument, postProvisioningDocument, putProvisioningDocument, getProvisioningVersionCurrent, putProvisioningVersionCurrent]
+  - file: crescendo-export-reporting.md
+    name: Export Crescendo conversations for reporting
+    api: openapi/crescendo-platform-openapi-original.json
+    operations: [listReportingBotConversations, listReportingVocConversations]
+  - file: crescendo-voc-recording.md
+    name: Process a VOC recording with Crescendo
+    api: openapi/crescendo-platform-openapi-original.json
+    operations: [uploadVocRecording, getVocJobStatus]

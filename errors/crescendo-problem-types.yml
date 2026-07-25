@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/crescendo-platform-openapi-original.json
+searched: https://docs.crescendo.ai/api-reference/introduction.md
+# Crescendo does NOT use RFC 9457 problem+json. Errors use a compact envelope.
+format: custom
+envelope:
+  media_type: application/json
+  schema: '{ "code": "<string>", "message": "<string>" }'
+  fields:
+    code: Machine-readable error code (e.g. BadRequest, Unauthenticated).
+    message: Human-readable description.
+problems:
+  - status: 400
+    code: BadRequest
+    title: Bad request
+    remediation: Fix the request payload, path, or query parameters.
+  - status: 401
+    code: Unauthenticated
+    title: Missing or invalid API key
+    remediation: Provide a valid Bearer API key via the Authorization header.
+  - status: 403
+    code: PermissionDenied
+    title: Permission denied / wrong tenant
+    remediation: API keys are tenant-scoped; use a key authorized for the target tenant and scope.
+  - status: 404
+    code: NotFound
+    title: Resource not found
+    remediation: The document, collection, or job does not exist.
+  - status: 500
+    code: InternalError
+    title: Internal server error
+    remediation: Retry later; contact support if persistent.
+  - status: 503
+    code: Unavailable
+    title: Service temporarily unavailable
+    remediation: Reporting backend temporarily unavailable; retry with backoff.
+source_operations:
+  - openapi/crescendo-platform-openapi-original.json#getProvisioningDocument
+  - openapi/crescendo-platform-openapi-original.json#listReportingBotConversations
+  - openapi/crescendo-platform-openapi-original.json#uploadVocRecording

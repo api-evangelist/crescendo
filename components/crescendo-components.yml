@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.crescendo.ai/assistants/enable-assistant.md
+components:
+  - family: AI Assistant (chat widget)
+    kind: embeddable-widget
+    description: Embeddable, configurable Crescendo AI Assistant chat widget for websites.
+    surfaces:
+      - platform: Website
+        docs: https://docs.crescendo.ai/assistants/enable-assistant
+      - platform: Shopify
+        docs: https://docs.crescendo.ai/assistants/enable-assistant-shopify-store
+    features:
+      - Version control / draft mode / rollback for assistant configuration
+      - Shopify cart & order attribution tagging
+notes: >
+  Client-side embeddable customer-experience widget (distinct from server SDKs).
+  Configured through the Crescendo dashboard and embedded via a snippet; Shopify
+  merchants have a dedicated install path.

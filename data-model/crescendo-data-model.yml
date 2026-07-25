@@ -1,0 +1,69 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/crescendo-platform-openapi-original.json
+entities:
+  - name: Tenant
+    id_field: tenantId
+    domain: provisioning
+    description: Top-level isolation boundary; every resource is scoped under a tenant.
+  - name: ProvisioningDocument
+    domain: provisioning
+    description: Arbitrary tenant-scoped JSON resource under a named collection.
+    key: 'tenants/{tenantId}/{collection}/{docId}'
+    auto_fields: [updated, updatedBy]
+  - name: ProvisioningCollection
+    domain: provisioning
+    description: Named collection of documents; listed as array of { id, data }.
+  - name: VersionCurrent
+    domain: provisioning
+    description: The versions/current document for a versioned provisioning resource.
+    key: 'tenants/{tenantId}/{collection}/{docId}/versions/current'
+  - name: BotConversation
+    domain: reporting
+    description: Assistant (bot) conversation row for reporting exports.
+    references: [Tenant, Bot]
+  - name: VocConversation
+    domain: reporting
+    description: Voice-of-customer conversation row for reporting exports.
+    references: [Tenant]
+  - name: VocRecordingJob
+    domain: voc
+    id_field: jobId
+    description: Asynchronous VOC processing job for an uploaded audio recording.
+    states: [started, completed, failed]
+  - name: Bot
+    domain: mcp
+    description: Assistant/bot exposed via the Bots MCP server (list_bots tool).
+relationships:
+  - from: ProvisioningDocument
+    type: belongs_to
+    to: Tenant
+    via: tenantId
+  - from: ProvisioningDocument
+    type: belongs_to
+    to: ProvisioningCollection
+    via: collection
+  - from: VersionCurrent
+    type: belongs_to
+    to: ProvisioningDocument
+    via: docId
+  - from: BotConversation
+    type: belongs_to
+    to: Tenant
+    via: TenantID
+  - from: BotConversation
+    type: belongs_to
+    to: Bot
+    via: BotID
+  - from: VocConversation
+    type: belongs_to
+    to: Tenant
+    via: tenantId
+  - from: VocRecordingJob
+    type: belongs_to
+    to: Tenant
+    via: tenantId
+  - from: Bot
+    type: belongs_to
+    to: Tenant
+    via: tenantId

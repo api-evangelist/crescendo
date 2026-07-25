@@ -1,24 +1,150 @@
 aid: crescendo
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/crescendo.png
 name: Crescendo
-description: Crescendo is a company surfaced as a portfolio company of general-catalyst, trinity-ventures
-  and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the
-  enrichment pipeline.
+description: >-
+  Crescendo is an AI-native customer experience (CX) platform that unifies AI
+  agents for chat, voice, email, and messaging with quality assurance, workforce
+  management, and business insights. The Crescendo Platform API (OpenAPI 3.1) is
+  a tenant-scoped HTTP API for provisioning tenant configuration and documents,
+  exporting assistant and voice-of-customer (VOC) conversations for reporting
+  with cursor pagination, uploading audio recordings for asynchronous VOC
+  processing, and driving assistants through a hosted Model Context Protocol
+  (MCP) bots server over Streamable HTTP. Authentication is a tenant-scoped
+  bearer API key. Crescendo is backed by General Catalyst and Trinity Ventures.
 url: https://raw.githubusercontent.com/api-evangelist/crescendo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - general-catalyst
 - trinity-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: has-public-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-apis: []
+- Customer Experience
+- Customer Support
+- Artificial Intelligence
+- AI Agents
+- Contact Center
+- Conversational AI
+- Voice of Customer
+- MCP
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: crescendo:crescendo-mcp-api
+  name: Crescendo MCP API
+  description: Model Context Protocol (MCP) endpoints.
+  humanURL: https://docs.crescendo.ai/api-reference/introduction
+  baseURL: https://platform.crescendo.ai
+  tags:
+  - MCP
+  properties:
+  - type: OpenAPI
+    url: openapi/crescendo-mcp-api-openapi.yml
+- aid: crescendo:crescendo-provisioning-api
+  name: Crescendo Provisioning API
+  description: Tenant-scoped provisioning resources.
+  humanURL: https://docs.crescendo.ai/api-reference/introduction
+  baseURL: https://platform.crescendo.ai
+  tags:
+  - Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/crescendo-provisioning-api-openapi.yml
+- aid: crescendo:crescendo-reporting-api
+  name: Crescendo Reporting API
+  description: Reporting-friendly exports (cursor pagination).
+  humanURL: https://docs.crescendo.ai/api-reference/introduction
+  baseURL: https://platform.crescendo.ai
+  tags:
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/crescendo-reporting-api-openapi.yml
+- aid: crescendo:crescendo-service-api
+  name: Crescendo Service API
+  description: Service metadata and health.
+  humanURL: https://docs.crescendo.ai/api-reference/introduction
+  baseURL: https://platform.crescendo.ai
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/crescendo-service-api-openapi.yml
+- aid: crescendo:crescendo-voc-api
+  name: Crescendo VOC API
+  description: Upload recordings for VOC processing.
+  humanURL: https://docs.crescendo.ai/api-reference/introduction
+  baseURL: https://platform.crescendo.ai
+  tags:
+  - VOC
+  properties:
+  - type: OpenAPI
+    url: openapi/crescendo-voc-api-openapi.yml
+common:
+- type: Documentation
+  url: https://docs.crescendo.ai
+- type: DeveloperPortal
+  url: https://docs.crescendo.ai
+- type: APIReference
+  url: https://docs.crescendo.ai/api-reference/introduction
+- type: Quickstart
+  url: https://docs.crescendo.ai/quickstart
+- type: LLMsTxt
+  url: llms/crescendo-llms.txt
+- type: Blog
+  url: https://www.crescendo.ai/blog
+- type: Support
+  url: https://www.crescendo.ai/contact
+- type: TermsOfService
+  url: https://crescendo.ai/policies/website-terms-of-use
+- type: PrivacyPolicy
+  url: https://www.crescendo.ai/policies/privacy
+- type: Website
+  url: https://www.crescendo.ai
+- type: MCPServer
+  url: mcp/crescendo-mcp.yml
+- type: Authentication
+  url: authentication/crescendo-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/crescendo-agentic-access.yml
+- type: DomainSecurity
+  url: security/crescendo-domain-security.yml
+- type: Conventions
+  url: conventions/crescendo-conventions.yml
+- type: ErrorCatalog
+  url: errors/crescendo-problem-types.yml
+- type: Conformance
+  url: conformance/crescendo-conformance.yml
+- type: Lifecycle
+  url: lifecycle/crescendo-lifecycle.yml
+- type: DataModel
+  url: data-model/crescendo-data-model.yml
+- type: Components
+  url: components/crescendo-components.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

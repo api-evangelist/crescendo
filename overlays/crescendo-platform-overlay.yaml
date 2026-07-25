@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Crescendo Platform API
+  version: 1.0.0
+extends: openapi/crescendo-platform-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-18'
+      x-api-provider: Crescendo
+      x-auth-style: bearer-api-key
+      x-tenant-scoped: true
+      x-error-envelope: '{ code, message }'
+  - target: $.info
+    update:
+      x-agent-ready:
+        mcp: https://platform.crescendo.ai/api/v1/mcp/tenants/{tenantId}/bots
+        llms_txt: https://docs.crescendo.ai/llms.txt
+  - target: $.tags
+    update:
+      - name: Provisioning
+        x-pagination: none
+      - name: Reporting
+        x-pagination: cursor

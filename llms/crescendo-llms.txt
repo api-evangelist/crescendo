@@ -1,0 +1,48 @@
+# Crescendo Documentation
+
+## Docs
+
+- [MCP bots endpoint](https://docs.crescendo.ai/api-reference/endpoint/mcp-bots.md): Use the Bots MCP server over Streamable HTTP (JSON-RPC 2.0).
+- [List a provisioning collection](https://docs.crescendo.ai/api-reference/endpoint/provisioning-get-collection.md): Read a tenant-scoped collection and receive `{ id, data }` entries.
+- [Get a provisioning document](https://docs.crescendo.ai/api-reference/endpoint/provisioning-get-document.md): Read a single tenant-scoped provisioning resource.
+- [Create or replace a provisioning document](https://docs.crescendo.ai/api-reference/endpoint/provisioning-post-replace.md): POST creates a new document or fully replaces an existing document.
+- [Update a provisioning document](https://docs.crescendo.ai/api-reference/endpoint/provisioning-put-update.md): PUT merges fields into an existing document (404 if missing).
+- [Export Assistant conversations (reporting)](https://docs.crescendo.ai/api-reference/endpoint/reporting-botconv.md): Retrieve Assistant conversations in a reporting-friendly format with cursor pagination.
+- [Export VOC conversations (reporting)](https://docs.crescendo.ai/api-reference/endpoint/reporting-vocconv.md): Retrieve VOC conversations in a reporting-friendly format with cursor pagination.
+- [Get VOC recording status](https://docs.crescendo.ai/api-reference/endpoint/voc-recording-status.md): Poll the latest known status for a VOC recording job.
+- [Upload a VOC recording](https://docs.crescendo.ai/api-reference/endpoint/voc-upload-recording.md): Upload an mp3/wav recording and start asynchronous VOC processing.
+- [API Introduction](https://docs.crescendo.ai/api-reference/introduction.md): Authentication, authorization, and conventions for the Crescendo Platform API.
+- [MCP bots endpoint (Streamable HTTP)](https://docs.crescendo.ai/api-reference/mcp/mcp-bots-endpoint-streamable-http.md): Streamable HTTP endpoint for the Bots MCP server. Requests and responses use JSON-RPC 2.0.
+- [Create or replace a provisioning document (POST = replace)](https://docs.crescendo.ai/api-reference/provisioning/create-or-replace-a-provisioning-document-post-=-replace.md): Creates a document if it does not exist, otherwise replaces the existing document (POST = replace).
+- [Create or replace a provisioning document (POST = replace)](https://docs.crescendo.ai/api-reference/provisioning/create-or-replace-a-provisioning-document-post-=-replace-1.md): Creates a document if it does not exist, otherwise replaces the existing document (POST = replace).
+- [Create or replace the current version document (POST = replace)](https://docs.crescendo.ai/api-reference/provisioning/create-or-replace-the-current-version-document-post-=-replace.md): Creates or replaces the `versions/current` document (POST = replace).
+- [Get a provisioning document](https://docs.crescendo.ai/api-reference/provisioning/get-a-provisioning-document.md): Reads a single tenant-scoped provisioning document.
+- [Get a provisioning document by ID](https://docs.crescendo.ai/api-reference/provisioning/get-a-provisioning-document-by-id.md): Reads a single document at the provided path.
+- [Get the current version document](https://docs.crescendo.ai/api-reference/provisioning/get-the-current-version-document.md): Reads the `versions/current` document for a versioned resource.
+- [List a provisioning collection](https://docs.crescendo.ai/api-reference/provisioning/list-a-provisioning-collection.md): Reads a collection and returns an array of `{ id, data }` objects.
+- [Update a provisioning document (PUT = merge update)](https://docs.crescendo.ai/api-reference/provisioning/update-a-provisioning-document-put-=-merge-update.md): Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+- [Update a provisioning document (PUT = merge update)](https://docs.crescendo.ai/api-reference/provisioning/update-a-provisioning-document-put-=-merge-update-1.md): Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+- [Update the current version document (PUT = merge update)](https://docs.crescendo.ai/api-reference/provisioning/update-the-current-version-document-put-=-merge-update.md): Updates an existing `versions/current` document by merging fields (PUT = merge update). Returns 404 if the document does not exist.
+- [List assistant conversations (reporting format)](https://docs.crescendo.ai/api-reference/reporting/list-assistant-conversations-reporting-format.md): Returns assistant conversations in a reporting-friendly row format (no message content, cursor pagination).
+- [List VOC conversations (reporting format)](https://docs.crescendo.ai/api-reference/reporting/list-voc-conversations-reporting-format.md): Returns VOC conversations in a reporting-friendly row format (no transcript content, cursor pagination).
+- [Get service info](https://docs.crescendo.ai/api-reference/service/get-service-info.md): Returns basic service metadata (name and version).
+- [Health check](https://docs.crescendo.ai/api-reference/service/health-check.md): Returns `ok` when the service is up.
+- [Get VOC job status](https://docs.crescendo.ai/api-reference/voc/get-voc-job-status.md): Returns the latest known status for a VOC recording job.
+- [Upload a recording for VOC processing](https://docs.crescendo.ai/api-reference/voc/upload-a-recording-for-voc-processing.md): Uploads an audio file and metadata, then starts an asynchronous VOC job.
+- [Connect HubSpot to Crescendo](https://docs.crescendo.ai/assistants/connect-hubspot.md): Connect your HubSpot account to Crescendo so AI assistants can use HubSpot CRM, ticket, conversation, and knowledge data.
+- [Enable AI Assistant on your Website](https://docs.crescendo.ai/assistants/enable-assistant.md): Step-by-step instructions how to embed and configure the Crescendo.ai AI Assistant on a Website
+- [Enable AI Assistant on your Shopify Store](https://docs.crescendo.ai/assistants/enable-assistant-shopify-store.md): Step-by-step instructions for merchants to embed and configure the Crescendo AI Assistant in a Shopify store.
+- [Introduction to AI Assistants](https://docs.crescendo.ai/assistants/introduction.md): Transform your customer service with intelligent, 24/7 AI-powered assistance that seamlessly integrates with your existing tools and knowledge base
+- [Shopify Attribution](https://docs.crescendo.ai/assistants/shopify-attribution.md): Step-by-step instructions for merchants to create tags for shopping carts and orders to demonstrate attribution of the Chat Assistant to product sales.
+- [AI Assistant Version Control](https://docs.crescendo.ai/assistants/version-control.md): Manage changes to your AI Assistants safely with version tracking, draft mode, comparison tools, and rollback capabilities
+- [Introduction](https://docs.crescendo.ai/index.md): Welcome to Crescendo!
+- [Quickstart](https://docs.crescendo.ai/quickstart.md): Get outcomes powered by AI + Superhumans.
+
+## OpenAPI Specs
+
+- [openapi](https://docs.crescendo.ai/api-reference/openapi.json)
+
+## Optional
+
+- [Customer Stories](https://www.crescendo.ai/case-studies)
+- [Blog](https://www.crescendo.ai/blog)

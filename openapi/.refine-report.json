@@ -1,0 +1,22 @@
+{
+  "provider": "crescendo",
+  "sources": [
+    "crescendo-mcp-api-openapi.yml",
+    "crescendo-provisioning-api-openapi.yml",
+    "crescendo-reporting-api-openapi.yml",
+    "crescendo-service-api-openapi.yml",
+    "crescendo-voc-api-openapi.yml"
+  ],
+  "outputs": [
+    "crescendo-mcp-api-openapi.yml",
+    "crescendo-provisioning-api-openapi.yml",
+    "crescendo-reporting-api-openapi.yml",
+    "crescendo-service-api-openapi.yml",
+    "crescendo-voc-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

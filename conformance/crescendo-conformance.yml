@@ -1,0 +1,27 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/crescendo-platform-openapi-original.json
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: Published OpenAPI 3.1.0 document at docs.crescendo.ai/api-reference/openapi.json
+  - id: oauth2
+    conforms: false
+    evidence: Auth is bearer API key (http bearer) + query token, not OAuth2 flows.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a compact { code, message } envelope, not application/problem+json.
+  - id: cursor-pagination
+    conforms: true
+    evidence: Reporting endpoints return { total, cursor.next, data } with opaque cursor.
+  - id: mcp
+    conforms: true
+    evidence: Hosted Model Context Protocol server (Streamable HTTP, JSON-RPC 2.0) at /api/v1/mcp/.../bots
+  - id: json-rpc-2.0
+    conforms: true
+    evidence: MCP bots endpoint uses JSON-RPC 2.0 request/response.
+  - id: multi-tenancy
+    conforms: true
+    evidence: All resource routes are tenant-scoped (tenants/{tenantId}); API keys are tenant-scoped.

@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.crescendo.ai/api-reference/introduction.md
+derived_from: openapi/crescendo-platform-openapi-original.json
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer $CRESCENDO_API_KEY'
+  alternative: '?bearer_token=$CRESCENDO_API_KEY (query; discouraged, may be logged)'
+  see: authentication/crescendo-authentication.yml
+authorization:
+  model: tenant-scoped API keys with prefix:resource.action scopes
+  scope_pattern: '<api-prefix>:<resource>.<read|write>'
+  examples:
+    - 'provisioning:*'
+    - 'provisioning:users.read'
+    - 'mcp:bots.*'
+  note: API keys are tenant-scoped; requests for a different tenant are rejected (403).
+tenancy:
+  scheme: path
+  segment: 'tenants/{tenantId}'
+  note: Every provisioning, reporting, VOC, and MCP route is tenant-scoped.
+pagination:
+  style: cursor
+  applies_to: [Reporting]
+  request_params:
+    limit: 'Max results per page. Default 1000, max 5000.'
+    cursor: 'Opaque cursor from cursor.next; omit for the first page.'
+    range: 'Convenience range selector.'
+    from: 'Range start (ISO 8601 or epoch ms).'
+    to: 'Range end (ISO 8601 or epoch ms).'
+  response_envelope: '{ "total": <int>, "cursor": { "next": <string|null> }, "data": [ ... ] }'
+write_semantics:
+  provisioning:
+    post: 'POST = replace (creates if absent, otherwise fully replaces the document).'
+    put: 'PUT = merge (merges fields into an existing document; 404 if missing).'
+    auto_fields: 'Writes auto-stamp `updated` and `updatedBy`.'
+    read: 'GET document returns an object; GET collection returns an array of { id, data }.'
+idempotency:
+  supported: false
+  note: No idempotency-key header/param is documented. POST provisioning is naturally
+    idempotent (replace semantics) but there is no dedicated idempotency contract.
+error_envelope:
+  shape: '{ "code": <string>, "message": <string> }'
+  see: errors/crescendo-problem-types.yml
+rate_limiting:
+  documented: false
+versioning:
+  see: lifecycle/crescendo-lifecycle.yml
+async:
+  voc: 'Recording upload returns 202 with a job id; poll GET .../recording/{jobId}/status.'

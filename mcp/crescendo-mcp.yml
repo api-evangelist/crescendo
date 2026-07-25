@@ -1,0 +1,25 @@
+generated: '2026-07-18'
+method: searched
+status: published
+source: https://docs.crescendo.ai/api-reference/endpoint/mcp-bots.md
+server:
+  name: crescendo-bots
+  transport: http
+  protocol: JSON-RPC 2.0
+  # Streamable HTTP endpoint; tenantId is path-scoped
+  url: https://platform.crescendo.ai/api/v1/mcp/tenants/{tenantId}/bots
+  authentication: Authorization Bearer API key (or ?bearer_token= query param)
+  source_operation: openapi/crescendo-platform-openapi-original.json#mcpBots
+methods:
+  - name: tools/list
+    description: List available tools exposed by the Bots MCP server.
+  - name: tools/call
+    description: Invoke a tool by name with an arguments object.
+tools:
+  - name: list_bots
+    description: List the tenant's assistants/bots. Accepts a `limit` parameter.
+    status: published
+notes: >
+  Official hosted MCP server exposed by the Crescendo Platform API over
+  Streamable HTTP using JSON-RPC 2.0. Additional tools are discoverable at
+  runtime via the tools/list method.

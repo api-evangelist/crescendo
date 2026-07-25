@@ -1,0 +1,24 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/crescendo-platform-openapi-original.json
+searched: https://docs.crescendo.ai/api-reference/introduction.md
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.6.0
+  docs: https://docs.crescendo.ai/api-reference/introduction
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+health:
+  # Public unauthenticated liveness endpoints
+  service_info: https://platform.crescendo.ai/
+  health_check: https://platform.crescendo.ai/health
+notes: >
+  No published deprecation policy, SLA, or dedicated status page was found.
+  The API exposes an unauthenticated /health liveness check and a service-info
+  root endpoint (name + version).
