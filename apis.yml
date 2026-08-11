@@ -101,6 +101,8 @@ apis:
   - type: OpenAPI
     url: openapi/crescendo-voc-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/crescendo-platform-overlay.yaml
 - type: Documentation
   url: https://docs.crescendo.ai
 - type: DeveloperPortal
