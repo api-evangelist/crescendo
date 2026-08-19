@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crescendo Platform MCP VOC API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VOC",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a recording for VOC processing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.crescendo.ai/api/v1/voc/tenants/:tenantId/recording",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads an audio file and metadata, then starts an asynchronous VOC job."
+        },
+        {
+          "info": {
+            "name": "Get VOC job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/voc/tenants/:tenantId/recording/:jobId/status",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "VOC job execution identifier returned by the upload endpoint."
+              }
+            ]
+          },
+          "docs": "Returns the latest known status for a VOC recording job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

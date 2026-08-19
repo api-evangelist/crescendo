@@ -1,0 +1,981 @@
+{
+  "item": [
+    {
+      "id": "9bf912b9-ef28-4a3a-b42a-76188ecee49f",
+      "name": "Reporting",
+      "description": {
+        "content": "Reporting-friendly exports (cursor pagination).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d078ee86-ed78-4b6a-8731-11b99a0fac22",
+          "name": "List assistant conversations (reporting format)",
+          "request": {
+            "name": "List assistant conversations (reporting format)",
+            "description": {
+              "content": "Returns assistant conversations in a reporting-friendly row format (no message content, cursor pagination).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "reporting",
+                "tenants",
+                ":tenantId",
+                "assistant",
+                "conversations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max results per page. Default `1000`, max `5000`."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`."
+                },
+                {
+                  "disabled": false,
+                  "key": "range",
+                  "value": "<string>",
+                  "description": "Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<long>",
+                  "description": "Range start. Accepts an ISO 8601 timestamp or epoch milliseconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<long>",
+                  "description": "Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantId",
+                  "description": "(Required) Tenant identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7941a4d9-86fa-4703-89f2-29d6a01d6d78",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "assistant",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 7947,\n  \"cursor\": {\n    \"next\": \"string\"\n  },\n  \"data\": [\n    {\n      \"ID\": \"string\",\n      \"TenantID\": \"string\",\n      \"BotID\": \"string\",\n      \"BotName\": \"string\",\n      \"Datetime\": 8593,\n      \"EndDatetime\": 8073,\n      \"DatetimeUTC\": \"1980-12-18T08:42:45.368Z\",\n      \"EndDatetimeUTC\": \"1985-07-30T12:53:52.362Z\",\n      \"Duration\": 9238,\n      \"Escalated\": false,\n      \"escalatedAt\": 3448,\n      \"CSat\": 2681.10903951165,\n      \"AgentName\": \"string\",\n      \"AgentId\": \"string\",\n      \"AgentEmail\": \"string\",\n      \"Category\": \"string\",\n      \"Subcategory\": \"string\",\n      \"Tertiary\": \"string\",\n      \"RemoteIp\": \"string\",\n      \"userAgent\": \"string\",\n      \"Referrer\": \"string\",\n      \"Media\": \"string\",\n      \"Summary\": \"string\",\n      \"Handoff Reason\": \"string\",\n      \"ticketId\": \"string\",\n      \"ticketUrl\": \"string\",\n      \"ticketKind\": \"string\",\n      \"Input\": \"string\",\n      \"Contact Name\": \"string\",\n      \"Contact Email\": \"string\",\n      \"Contact Phone\": \"string\"\n    },\n    {\n      \"ID\": \"string\",\n      \"TenantID\": \"string\",\n      \"BotID\": \"string\",\n      \"BotName\": \"string\",\n      \"Datetime\": 8780,\n      \"EndDatetime\": 6535,\n      \"DatetimeUTC\": \"1977-01-24T14:20:30.075Z\",\n      \"EndDatetimeUTC\": \"2007-09-27T09:40:59.026Z\",\n      \"Duration\": 3914,\n      \"Escalated\": true,\n      \"escalatedAt\": 4994,\n      \"CSat\": 9835.546246429427,\n      \"AgentName\": \"string\",\n      \"AgentId\": \"string\",\n      \"AgentEmail\": \"string\",\n      \"Category\": \"string\",\n      \"Subcategory\": \"string\",\n      \"Tertiary\": \"string\",\n      \"RemoteIp\": \"string\",\n      \"userAgent\": \"string\",\n      \"Referrer\": \"string\",\n      \"Media\": \"string\",\n      \"Summary\": \"string\",\n      \"Handoff Reason\": \"string\",\n      \"ticketId\": \"string\",\n      \"ticketUrl\": \"string\",\n      \"ticketKind\": \"string\",\n      \"Input\": \"string\",\n      \"Contact Name\": \"string\",\n      \"Contact Email\": \"string\",\n      \"Contact Phone\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dada137-c936-41fa-9cd5-d5744b6bb203",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "assistant",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BadRequest\",\n  \"message\": \"Invalid request parameters\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecc2eeb2-e5ae-48fd-bac5-42683cbdf31a",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "assistant",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Unauthenticated\",\n  \"message\": \"Authorization header with Bearer token is required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c7c5fcf-5dc9-402d-8a26-ba5ad3dd0f4a",
+              "name": "Permission denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "assistant",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PermissionDenied\",\n  \"message\": \"API key does not allow this operation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ef0122b-2c91-4ffb-9615-872c3b0e0284",
+              "name": "Upstream dependency unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "assistant",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Unavailable\",\n  \"message\": \"Elastic search failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f18310a9-d96a-4c05-947b-2c71f2e33e51",
+          "name": "List VOC conversations (reporting format)",
+          "request": {
+            "name": "List VOC conversations (reporting format)",
+            "description": {
+              "content": "Returns VOC conversations in a reporting-friendly row format (no transcript content, cursor pagination).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "reporting",
+                "tenants",
+                ":tenantId",
+                "voc",
+                "conversations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max results per page. Default `1000`, max `5000`."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`."
+                },
+                {
+                  "disabled": false,
+                  "key": "range",
+                  "value": "<string>",
+                  "description": "Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<long>",
+                  "description": "Range start. Accepts an ISO 8601 timestamp or epoch milliseconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<long>",
+                  "description": "Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantId",
+                  "description": "(Required) Tenant identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2796fabd-4fe7-4fae-a4db-8b1ba2cdf7f1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "voc",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 5471,\n  \"cursor\": {\n    \"next\": \"string\"\n  },\n  \"data\": [\n    {\n      \"ID\": \"string\",\n      \"TenantID\": \"string\",\n      \"Datetime\": \"1963-02-03T17:32:50.390Z\",\n      \"DatetimeUTC\": \"1957-07-28T20:53:55.976Z\",\n      \"Duration\": 7231,\n      \"Direction\": \"string\",\n      \"Media\": \"string\",\n      \"AgentName\": \"string\",\n      \"AgentId\": \"string\",\n      \"AgentEmail\": \"string\",\n      \"CustomerName\": \"string\",\n      \"CustomerId\": \"string\",\n      \"CustomerEmail\": \"string\",\n      \"Groups\": \"string\",\n      \"Tags\": \"string\",\n      \"Category\": \"string\",\n      \"Subcategory\": \"string\",\n      \"Tertiary\": \"string\",\n      \"CategoryExplanation\": \"string\",\n      \"CategoriesId\": \"string\",\n      \"Summary\": \"string\",\n      \"CSat\": 6033.901911047718,\n      \"CSatExplanation\": \"string\",\n      \"Sentiment\": 3081.4294049594882,\n      \"SentimentExplanation\": \"string\",\n      \"Problems\": [\n        {\n          \"key_0\": 9453,\n          \"key_1\": true\n        },\n        {\n          \"key_0\": 5073.187763107971,\n          \"key_1\": false,\n          \"key_2\": \"string\"\n        }\n      ],\n      \"KPIs\": [\n        {\n          \"key_0\": 2716,\n          \"key_1\": \"string\"\n        },\n        {\n          \"key_0\": 3237.7773856863923\n        }\n      ],\n      \"SourceSystem\": \"string\",\n      \"TicketId\": \"string\",\n      \"TicketUrl\": \"string\"\n    },\n    {\n      \"ID\": \"string\",\n      \"TenantID\": \"string\",\n      \"Datetime\": \"1979-09-27T05:25:34.940Z\",\n      \"DatetimeUTC\": \"1970-08-05T14:38:29.242Z\",\n      \"Duration\": 3324,\n      \"Direction\": \"string\",\n      \"Media\": \"string\",\n      \"AgentName\": \"string\",\n      \"AgentId\": \"string\",\n      \"AgentEmail\": \"string\",\n      \"CustomerName\": \"string\",\n      \"CustomerId\": \"string\",\n      \"CustomerEmail\": \"string\",\n      \"Groups\": \"string\",\n      \"Tags\": \"string\",\n      \"Category\": \"string\",\n      \"Subcategory\": \"string\",\n      \"Tertiary\": \"string\",\n      \"CategoryExplanation\": \"string\",\n      \"CategoriesId\": \"string\",\n      \"Summary\": \"string\",\n      \"CSat\": 2557.587751453373,\n      \"CSatExplanation\": \"string\",\n      \"Sentiment\": 8019.187947289353,\n      \"SentimentExplanation\": \"string\",\n      \"Problems\": [\n        {\n          \"key_0\": 9753,\n          \"key_1\": 7308.984101396069\n        },\n        {\n          \"key_0\": \"string\"\n        }\n      ],\n      \"KPIs\": [\n        {\n          \"key_0\": 869.2329375318719,\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        {\n          \"key_0\": 8454.51922853215\n        }\n      ],\n      \"SourceSystem\": \"string\",\n      \"TicketId\": \"string\",\n      \"TicketUrl\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d47a4db-ec6f-4a2c-9928-5c9f3de3d472",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "voc",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BadRequest\",\n  \"message\": \"Invalid request parameters\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1d026cb-5816-48ec-8782-5c6d296f0674",
+              "name": "Unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "voc",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Unauthenticated\",\n  \"message\": \"Authorization header with Bearer token is required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e01e671e-cf7f-423b-b540-d120b8514340",
+              "name": "Permission denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "voc",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PermissionDenied\",\n  \"message\": \"API key does not allow this operation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3276a5e3-3048-41e2-87f6-48bf341e71bf",
+              "name": "Upstream dependency unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "reporting",
+                    "tenants",
+                    ":tenantId",
+                    "voc",
+                    "conversations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantId",
+                      "description": "(Required) Tenant identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"Unavailable\",\n  \"message\": \"Elastic search failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.crescendo.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "61152748-304a-496c-8744-5eb5eaa70788",
+    "name": "Crescendo Platform MCP Reporting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public HTTP API for the Crescendo platform.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crescendo Platform MCP Reporting API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reporting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List assistant conversations (reporting format)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/reporting/tenants/:tenantId/assistant/conversations",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max results per page. Default `1000`, max `5000`."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`."
+              },
+              {
+                "name": "range",
+                "value": "",
+                "type": "query",
+                "description": "Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Range start. Accepts an ISO 8601 timestamp or epoch milliseconds."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now."
+              }
+            ]
+          },
+          "docs": "Returns assistant conversations in a reporting-friendly row format (no message content, cursor pagination)."
+        },
+        {
+          "info": {
+            "name": "List VOC conversations (reporting format)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/reporting/tenants/:tenantId/voc/conversations",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max results per page. Default `1000`, max `5000`."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`."
+              },
+              {
+                "name": "range",
+                "value": "",
+                "type": "query",
+                "description": "Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Range start. Accepts an ISO 8601 timestamp or epoch milliseconds."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now."
+              }
+            ]
+          },
+          "docs": "Returns VOC conversations in a reporting-friendly row format (no transcript content, cursor pagination)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

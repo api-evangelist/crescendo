@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crescendo Platform MCP API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "MCP bots endpoint (Streamable HTTP)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.crescendo.ai/api/v1/mcp/tenants/:tenantId/bots",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Streamable HTTP endpoint for the Bots MCP server. Requests and responses use JSON-RPC 2.0."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

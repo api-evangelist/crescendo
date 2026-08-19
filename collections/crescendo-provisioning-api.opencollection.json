@@ -1,0 +1,316 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crescendo Platform MCP Provisioning API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a provisioning document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              }
+            ]
+          },
+          "docs": "Reads a single tenant-scoped provisioning document."
+        },
+        {
+          "info": {
+            "name": "Create or replace a provisioning document (POST = replace)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a document if it does not exist, otherwise replaces the existing document (POST = replace)."
+        },
+        {
+          "info": {
+            "name": "Update a provisioning document (PUT = merge update)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist."
+        },
+        {
+          "info": {
+            "name": "List a provisioning collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              }
+            ]
+          },
+          "docs": "Reads a collection and returns an array of `{ id, data }` objects."
+        },
+        {
+          "info": {
+            "name": "Get a provisioning document by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ]
+          },
+          "docs": "Reads a single document at the provided path."
+        },
+        {
+          "info": {
+            "name": "Create or replace a provisioning document (POST = replace)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a document if it does not exist, otherwise replaces the existing document (POST = replace)."
+        },
+        {
+          "info": {
+            "name": "Update a provisioning document (PUT = merge update)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing document by merging fields (PUT = merge update). Returns 404 if the document does not exist."
+        },
+        {
+          "info": {
+            "name": "Get the current version document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId/versions/current",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ]
+          },
+          "docs": "Reads the `versions/current` document for a versioned resource."
+        },
+        {
+          "info": {
+            "name": "Create or replace the current version document (POST = replace)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId/versions/current",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or replaces the `versions/current` document (POST = replace)."
+        },
+        {
+          "info": {
+            "name": "Update the current version document (PUT = merge update)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://platform.crescendo.ai/api/v1/provisioning/tenants/:tenantId/:collection/:docId/versions/current",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path",
+                "description": "Tenant identifier."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection name under the tenant (for example: `users`, `bots`, `jobs`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier within the collection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing `versions/current` document by merging fields (PUT = merge update). Returns 404 if the document does not exist."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

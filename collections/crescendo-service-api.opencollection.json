@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crescendo Platform MCP Service API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get service info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/"
+          },
+          "docs": "Returns basic service metadata (name and version)."
+        },
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.crescendo.ai/health"
+          },
+          "docs": "Returns `ok` when the service is up."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
