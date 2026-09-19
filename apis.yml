@@ -109,6 +109,8 @@ apis:
   humanURL: https://docs.crescendo.ai/api-reference/introduction
   baseURL: https://platform.crescendo.ai
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
