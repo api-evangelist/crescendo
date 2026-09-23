@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Crescendo Platform MCP Service API
+  title: Crescendo Platform Service API
   version: 1.6.0
   description: Public HTTP API for the Crescendo platform.
 servers:
@@ -31,6 +31,8 @@ paths:
                   value:
                     name: platform-api-service
                     version: 1.6.0
+      operationId: getRoot
+      x-operation-id-source: derived
   /health:
     get:
       tags:
@@ -49,6 +51,8 @@ paths:
                 example:
                   value:
                     status: ok
+      operationId: getHealth
+      x-operation-id-source: derived
 components:
   schemas:
     HealthStatus:

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Crescendo Platform MCP API
   version: 1.6.0
@@ -49,7 +49,66 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+          examples:
+            example:
+              value:
+                message: Internal Server Error
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     McpJsonRpcRequest:
       type: object
       properties:
@@ -94,65 +153,6 @@ components:
           additionalProperties: true
       required:
       - jsonrpc
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-  responses:
-    PermissionDenied:
-      description: Permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: PermissionDenied
-                message: API key does not allow this operation
-    Unauthenticated:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unauthenticated
-                message: Authorization header with Bearer token is required
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-            required:
-            - message
-          examples:
-            example:
-              value:
-                message: Internal Server Error
   parameters:
     tenantId:
       name: tenantId

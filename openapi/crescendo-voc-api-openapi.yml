@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Crescendo Platform MCP VOC API
+  title: Crescendo Platform VOC API
   version: 1.6.0
   description: Public HTTP API for the Crescendo platform.
 servers:
@@ -82,30 +82,77 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: NotFound
+                message: Resource not found
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+          examples:
+            example:
+              value:
+                message: Internal Server Error
   schemas:
-    VocUploadForm:
+    ErrorResponse:
       type: object
       properties:
-        audio:
+        code:
           type: string
-          format: binary
-          description: Audio file (mp3 or wav).
-        file:
-          type: string
-          format: binary
-          description: Alternative field name for the audio file (mp3 or wav).
-        metadata:
-          type: string
-          description: JSON string containing recording metadata. Must include `id`.
-      required:
-      - metadata
-    VocUploadAcceptedResponse:
-      type: object
-      properties:
-        id:
+        message:
           type: string
       required:
-      - id
+      - code
+      - message
     VocJobStatus:
       type: object
       description: VOC job status payload. Fields may vary depending on job stage.
@@ -147,16 +194,29 @@ components:
       - id
       - status
       - started
-    ErrorResponse:
+    VocUploadAcceptedResponse:
       type: object
       properties:
-        code:
-          type: string
-        message:
+        id:
           type: string
       required:
-      - code
-      - message
+      - id
+    VocUploadForm:
+      type: object
+      properties:
+        audio:
+          type: string
+          format: binary
+          description: Audio file (mp3 or wav).
+        file:
+          type: string
+          format: binary
+          description: Alternative field name for the audio file (mp3 or wav).
+        metadata:
+          type: string
+          description: JSON string containing recording metadata. Must include `id`.
+      required:
+      - metadata
   parameters:
     jobId:
       name: jobId
@@ -172,66 +232,6 @@ components:
       description: Tenant identifier.
       schema:
         type: string
-  responses:
-    PermissionDenied:
-      description: Permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: PermissionDenied
-                message: API key does not allow this operation
-    Unauthenticated:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unauthenticated
-                message: Authorization header with Bearer token is required
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
-    NotFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: NotFound
-                message: Resource not found
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-            required:
-            - message
-          examples:
-            example:
-              value:
-                message: Internal Server Error
   securitySchemes:
     bearerAuth:
       type: http

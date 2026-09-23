@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Crescendo Platform MCP Reporting API
+  title: Crescendo Platform Reporting API
   version: 1.6.0
   description: Public HTTP API for the Crescendo platform.
 servers:
@@ -72,6 +72,164 @@ paths:
           $ref: '#/components/responses/Unavailable'
 components:
   schemas:
+    VocConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VocConversationRow'
+      required:
+      - total
+      - cursor
+      - data
+    VocConversationRow:
+      type: object
+      description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
+      properties:
+        ID:
+          type:
+          - string
+          - 'null'
+        TenantID:
+          type:
+          - string
+          - 'null'
+        Datetime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        DatetimeUTC:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        Duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        Direction:
+          type:
+          - string
+          - 'null'
+        Media:
+          type:
+          - string
+          - 'null'
+        AgentName:
+          type:
+          - string
+          - 'null'
+        AgentId:
+          type:
+          - string
+          - integer
+          - 'null'
+        AgentEmail:
+          type:
+          - string
+          - 'null'
+        CustomerName:
+          type:
+          - string
+          - 'null'
+        CustomerId:
+          type:
+          - string
+          - integer
+          - 'null'
+        CustomerEmail:
+          type:
+          - string
+          - 'null'
+        Groups:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Tags:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Category:
+          type:
+          - string
+          - 'null'
+        Subcategory:
+          type:
+          - string
+          - 'null'
+        Tertiary:
+          type:
+          - string
+          - 'null'
+        CategoryExplanation:
+          type:
+          - string
+          - 'null'
+        CategoriesId:
+          type:
+          - string
+          - 'null'
+        Summary:
+          type:
+          - string
+          - 'null'
+        CSat:
+          type:
+          - number
+          - 'null'
+        CSatExplanation:
+          type:
+          - string
+          - 'null'
+        Sentiment:
+          type:
+          - number
+          - 'null'
+        SentimentExplanation:
+          type:
+          - string
+          - 'null'
+        Problems:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        KPIs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        SourceSystem:
+          type:
+          - string
+          - 'null'
+        TicketId:
+          type:
+          - string
+          - integer
+          - 'null'
+        TicketUrl:
+          type:
+          - string
+          - 'null'
     BotConversationRow:
       type: object
       description: Reporting row for a assistant conversation. Keys are optimized for reporting/exports.
@@ -223,148 +381,6 @@ components:
       - DatetimeUTC
       - EndDatetimeUTC
       - Duration
-    VocConversationRow:
-      type: object
-      description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
-      properties:
-        ID:
-          type:
-          - string
-          - 'null'
-        TenantID:
-          type:
-          - string
-          - 'null'
-        Datetime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        DatetimeUTC:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        Duration:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        Direction:
-          type:
-          - string
-          - 'null'
-        Media:
-          type:
-          - string
-          - 'null'
-        AgentName:
-          type:
-          - string
-          - 'null'
-        AgentId:
-          type:
-          - string
-          - integer
-          - 'null'
-        AgentEmail:
-          type:
-          - string
-          - 'null'
-        CustomerName:
-          type:
-          - string
-          - 'null'
-        CustomerId:
-          type:
-          - string
-          - integer
-          - 'null'
-        CustomerEmail:
-          type:
-          - string
-          - 'null'
-        Groups:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        Tags:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        Category:
-          type:
-          - string
-          - 'null'
-        Subcategory:
-          type:
-          - string
-          - 'null'
-        Tertiary:
-          type:
-          - string
-          - 'null'
-        CategoryExplanation:
-          type:
-          - string
-          - 'null'
-        CategoriesId:
-          type:
-          - string
-          - 'null'
-        Summary:
-          type:
-          - string
-          - 'null'
-        CSat:
-          type:
-          - number
-          - 'null'
-        CSatExplanation:
-          type:
-          - string
-          - 'null'
-        Sentiment:
-          type:
-          - number
-          - 'null'
-        SentimentExplanation:
-          type:
-          - string
-          - 'null'
-        Problems:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties: true
-        KPIs:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties: true
-        SourceSystem:
-          type:
-          - string
-          - 'null'
-        TicketId:
-          type:
-          - string
-          - integer
-          - 'null'
-        TicketUrl:
-          type:
-          - string
-          - 'null'
     ErrorResponse:
       type: object
       properties:
@@ -375,31 +391,6 @@ components:
       required:
       - code
       - message
-    VocConversationReportingResponse:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/VocConversationRow'
-      required:
-      - total
-      - cursor
-      - data
-    ReportingCursor:
-      type: object
-      properties:
-        next:
-          type:
-          - string
-          - 'null'
-      required:
-      - next
     BotConversationReportingResponse:
       type: object
       properties:
@@ -416,40 +407,16 @@ components:
       - total
       - cursor
       - data
+    ReportingCursor:
+      type: object
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+      required:
+      - next
   responses:
-    Unavailable:
-      description: Upstream dependency unavailable
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unavailable
-                message: Elastic search failed
-    PermissionDenied:
-      description: Permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: PermissionDenied
-                message: API key does not allow this operation
-    Unauthenticated:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unauthenticated
-                message: Authorization header with Bearer token is required
     BadRequest:
       description: Bad request
       content:
@@ -461,20 +428,40 @@ components:
               value:
                 code: BadRequest
                 message: Invalid request parameters
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    Unavailable:
+      description: Upstream dependency unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unavailable
+                message: Elastic search failed
   parameters:
-    reportingFrom:
-      name: from
-      in: query
-      required: false
-      description: Range start. Accepts an ISO 8601 timestamp or epoch milliseconds.
-      schema:
-        oneOf:
-        - type: integer
-          format: int64
-          description: Epoch milliseconds.
-        - type: string
-          format: date-time
-          description: ISO 8601 timestamp.
     reportingCursor:
       name: cursor
       in: query
@@ -482,17 +469,16 @@ components:
       description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
       schema:
         type: string
-    reportingRange:
-      name: range
+    reportingLimit:
+      name: limit
       in: query
       required: false
-      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
+      description: Max results per page. Default `1000`, max `5000`.
       schema:
-        type: string
-        enum:
-        - last_day
-        - last_week
-        - last_month
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 5000
     tenantId:
       name: tenantId
       in: path
@@ -513,16 +499,30 @@ components:
         - type: string
           format: date-time
           description: ISO 8601 timestamp.
-    reportingLimit:
-      name: limit
+    reportingRange:
+      name: range
       in: query
       required: false
-      description: Max results per page. Default `1000`, max `5000`.
+      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
       schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 5000
+        type: string
+        enum:
+        - last_day
+        - last_week
+        - last_month
+    reportingFrom:
+      name: from
+      in: query
+      required: false
+      description: Range start. Accepts an ISO 8601 timestamp or epoch milliseconds.
+      schema:
+        oneOf:
+        - type: integer
+          format: int64
+          description: Epoch milliseconds.
+        - type: string
+          format: date-time
+          description: ISO 8601 timestamp.
   securitySchemes:
     bearerAuth:
       type: http
