@@ -47,10 +47,14 @@ x-tier-reason: has-public-api
 specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-18'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-24
+x-docs-hosting: vercel
 tags:
 - Company
 - Customer Experience
-- Customer-Support
+- Customer Support
 - Artificial Intelligence
 - AI Agents
 - Contact Center
@@ -67,6 +71,7 @@ tags_raw:
 - Conversational AI
 - Voice of Customer
 - MCP
+- Customer-Support
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

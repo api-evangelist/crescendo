@@ -72,22 +72,16 @@ paths:
           $ref: '#/components/responses/Unavailable'
 components:
   schemas:
-    VocConversationReportingResponse:
+    ErrorResponse:
       type: object
       properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/VocConversationRow'
+        code:
+          type: string
+        message:
+          type: string
       required:
-      - total
-      - cursor
-      - data
+      - code
+      - message
     VocConversationRow:
       type: object
       description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
@@ -230,6 +224,38 @@ components:
           type:
           - string
           - 'null'
+    BotConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotConversationRow'
+      required:
+      - total
+      - cursor
+      - data
+    VocConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VocConversationRow'
+      required:
+      - total
+      - cursor
+      - data
     BotConversationRow:
       type: object
       description: Reporting row for a assistant conversation. Keys are optimized for reporting/exports.
@@ -381,32 +407,6 @@ components:
       - DatetimeUTC
       - EndDatetimeUTC
       - Duration
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    BotConversationReportingResponse:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BotConversationRow'
-      required:
-      - total
-      - cursor
-      - data
     ReportingCursor:
       type: object
       properties:
@@ -417,17 +417,6 @@ components:
       required:
       - next
   responses:
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
     Unauthenticated:
       description: Unauthenticated
       content:
@@ -439,17 +428,6 @@ components:
               value:
                 code: Unauthenticated
                 message: Authorization header with Bearer token is required
-    PermissionDenied:
-      description: Permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: PermissionDenied
-                message: API key does not allow this operation
     Unavailable:
       description: Upstream dependency unavailable
       content:
@@ -461,24 +439,29 @@ components:
               value:
                 code: Unavailable
                 message: Elastic search failed
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
   parameters:
-    reportingCursor:
-      name: cursor
-      in: query
-      required: false
-      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
-      schema:
-        type: string
-    reportingLimit:
-      name: limit
-      in: query
-      required: false
-      description: Max results per page. Default `1000`, max `5000`.
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 5000
     tenantId:
       name: tenantId
       in: path
@@ -486,19 +469,6 @@ components:
       description: Tenant identifier.
       schema:
         type: string
-    reportingTo:
-      name: to
-      in: query
-      required: false
-      description: Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now.
-      schema:
-        oneOf:
-        - type: integer
-          format: int64
-          description: Epoch milliseconds.
-        - type: string
-          format: date-time
-          description: ISO 8601 timestamp.
     reportingRange:
       name: range
       in: query
@@ -510,6 +480,13 @@ components:
         - last_day
         - last_week
         - last_month
+    reportingCursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
+      schema:
+        type: string
     reportingFrom:
       name: from
       in: query
@@ -523,6 +500,29 @@ components:
         - type: string
           format: date-time
           description: ISO 8601 timestamp.
+    reportingTo:
+      name: to
+      in: query
+      required: false
+      description: Range end. Accepts an ISO 8601 timestamp or epoch milliseconds. Defaults to now.
+      schema:
+        oneOf:
+        - type: integer
+          format: int64
+          description: Epoch milliseconds.
+        - type: string
+          format: date-time
+          description: ISO 8601 timestamp.
+    reportingLimit:
+      name: limit
+      in: query
+      required: false
+      description: Max results per page. Default `1000`, max `5000`.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 5000
   securitySchemes:
     bearerAuth:
       type: http

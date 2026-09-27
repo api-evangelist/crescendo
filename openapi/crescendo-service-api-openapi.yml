@@ -55,13 +55,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HealthStatus:
-      type: object
-      properties:
-        status:
-          type: string
-      required:
-      - status
     ServiceInfo:
       type: object
       properties:
@@ -72,6 +65,13 @@ components:
       required:
       - name
       - version
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
   securitySchemes:
     bearerAuth:
       type: http

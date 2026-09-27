@@ -82,77 +82,30 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthenticated:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unauthenticated
-                message: Authorization header with Bearer token is required
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
-    NotFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: NotFound
-                message: Resource not found
-    PermissionDenied:
-      description: Permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: PermissionDenied
-                message: API key does not allow this operation
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-            required:
-            - message
-          examples:
-            example:
-              value:
-                message: Internal Server Error
   schemas:
-    ErrorResponse:
+    VocUploadForm:
       type: object
       properties:
-        code:
+        audio:
           type: string
-        message:
+          format: binary
+          description: Audio file (mp3 or wav).
+        file:
+          type: string
+          format: binary
+          description: Alternative field name for the audio file (mp3 or wav).
+        metadata:
+          type: string
+          description: JSON string containing recording metadata. Must include `id`.
+      required:
+      - metadata
+    VocUploadAcceptedResponse:
+      type: object
+      properties:
+        id:
           type: string
       required:
-      - code
-      - message
+      - id
     VocJobStatus:
       type: object
       description: VOC job status payload. Fields may vary depending on job stage.
@@ -194,42 +147,89 @@ components:
       - id
       - status
       - started
-    VocUploadAcceptedResponse:
+    ErrorResponse:
       type: object
       properties:
-        id:
+        code:
+          type: string
+        message:
           type: string
       required:
-      - id
-    VocUploadForm:
-      type: object
-      properties:
-        audio:
-          type: string
-          format: binary
-          description: Audio file (mp3 or wav).
-        file:
-          type: string
-          format: binary
-          description: Alternative field name for the audio file (mp3 or wav).
-        metadata:
-          type: string
-          description: JSON string containing recording metadata. Must include `id`.
-      required:
-      - metadata
+      - code
+      - message
+  responses:
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+          examples:
+            example:
+              value:
+                message: Internal Server Error
+    PermissionDenied:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: PermissionDenied
+                message: API key does not allow this operation
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: NotFound
+                message: Resource not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
   parameters:
-    jobId:
-      name: jobId
-      in: path
-      required: true
-      description: VOC job execution identifier returned by the upload endpoint.
-      schema:
-        type: string
     tenantId:
       name: tenantId
       in: path
       required: true
       description: Tenant identifier.
+      schema:
+        type: string
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      description: VOC job execution identifier returned by the upload endpoint.
       schema:
         type: string
   securitySchemes:
