@@ -82,6 +82,31 @@ components:
       required:
       - code
       - message
+    ReportingCursor:
+      type: object
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+      required:
+      - next
+    VocConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VocConversationRow'
+      required:
+      - total
+      - cursor
+      - data
     VocConversationRow:
       type: object
       description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
@@ -224,38 +249,6 @@ components:
           type:
           - string
           - 'null'
-    BotConversationReportingResponse:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BotConversationRow'
-      required:
-      - total
-      - cursor
-      - data
-    VocConversationReportingResponse:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/VocConversationRow'
-      required:
-      - total
-      - cursor
-      - data
     BotConversationRow:
       type: object
       description: Reporting row for a assistant conversation. Keys are optimized for reporting/exports.
@@ -407,15 +400,22 @@ components:
       - DatetimeUTC
       - EndDatetimeUTC
       - Duration
-    ReportingCursor:
+    BotConversationReportingResponse:
       type: object
       properties:
-        next:
-          type:
-          - string
-          - 'null'
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotConversationRow'
       required:
-      - next
+      - total
+      - cursor
+      - data
   responses:
     Unauthenticated:
       description: Unauthenticated
@@ -462,31 +462,16 @@ components:
                 code: BadRequest
                 message: Invalid request parameters
   parameters:
-    tenantId:
-      name: tenantId
-      in: path
-      required: true
-      description: Tenant identifier.
-      schema:
-        type: string
-    reportingRange:
-      name: range
+    reportingLimit:
+      name: limit
       in: query
       required: false
-      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
+      description: Max results per page. Default `1000`, max `5000`.
       schema:
-        type: string
-        enum:
-        - last_day
-        - last_week
-        - last_month
-    reportingCursor:
-      name: cursor
-      in: query
-      required: false
-      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
-      schema:
-        type: string
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 5000
     reportingFrom:
       name: from
       in: query
@@ -513,16 +498,31 @@ components:
         - type: string
           format: date-time
           description: ISO 8601 timestamp.
-    reportingLimit:
-      name: limit
+    reportingRange:
+      name: range
       in: query
       required: false
-      description: Max results per page. Default `1000`, max `5000`.
+      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
       schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 5000
+        type: string
+        enum:
+        - last_day
+        - last_week
+        - last_month
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
+    reportingCursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

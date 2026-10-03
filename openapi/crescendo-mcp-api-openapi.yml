@@ -49,6 +49,61 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    McpJsonRpcRequest:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          type:
+          - string
+          - number
+          - 'null'
+        method:
+          type: string
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - jsonrpc
+      - method
+    McpJsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          type:
+          - string
+          - number
+          - 'null'
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        error:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - jsonrpc
   responses:
     Unauthenticated:
       description: Unauthenticated
@@ -98,61 +153,6 @@ components:
               value:
                 code: BadRequest
                 message: Invalid request parameters
-  schemas:
-    McpJsonRpcResponse:
-      type: object
-      properties:
-        jsonrpc:
-          type: string
-          const: '2.0'
-        id:
-          type:
-          - string
-          - number
-          - 'null'
-        result:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        error:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-      required:
-      - jsonrpc
-    McpJsonRpcRequest:
-      type: object
-      properties:
-        jsonrpc:
-          type: string
-          const: '2.0'
-        id:
-          type:
-          - string
-          - number
-          - 'null'
-        method:
-          type: string
-        params:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-      required:
-      - jsonrpc
-      - method
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
   parameters:
     tenantId:
       name: tenantId
