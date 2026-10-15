@@ -2,6 +2,7 @@ generated: '2026-10-13'
 method: searched
 checked:
 - https://aws.amazon.com/marketplace/
+- shopify/integrations/shopify-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -19,3 +20,23 @@ edges:
   seller_name: Crescendo AI
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Shopify (own)
+  partner: shopify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://apps.shopify.com/crescendo
+  mirror_of: shopify/integrations/shopify-integration-edges.yml
+  apps:
+  - Crescendo
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  publisher_verified:
+  - Built for Shopify
+source:
+- shopify/integrations/shopify-integration-edges.yml
