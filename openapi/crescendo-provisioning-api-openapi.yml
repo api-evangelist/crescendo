@@ -318,11 +318,11 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    tenantId:
-      name: tenantId
+    docId:
+      name: docId
       in: path
       required: true
-      description: Tenant identifier.
+      description: Document identifier within the collection.
       schema:
         type: string
     collection:
@@ -332,55 +332,14 @@ components:
       description: 'Collection name under the tenant (for example: `users`, `bots`, `jobs`).'
       schema:
         type: string
-    docId:
-      name: docId
+    tenantId:
+      name: tenantId
       in: path
       required: true
-      description: Document identifier within the collection.
+      description: Tenant identifier.
       schema:
         type: string
-  schemas:
-    ProvisioningCollectionResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/ProvisioningCollectionEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    ProvisioningDocument:
-      type: object
-      description: Arbitrary JSON object representing the provisioning resource.
-      additionalProperties: true
-    ProvisioningCollectionEntry:
-      type: object
-      properties:
-        id:
-          type: string
-        data:
-          type: object
-          additionalProperties: true
-      required:
-      - id
-      - data
   responses:
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
     Unauthenticated:
       description: Unauthenticated
       content:
@@ -392,6 +351,17 @@ components:
               value:
                 code: Unauthenticated
                 message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
     NotFound:
       description: Not found
       content:
@@ -414,6 +384,36 @@ components:
               value:
                 code: PermissionDenied
                 message: API key does not allow this operation
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    ProvisioningCollectionResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProvisioningCollectionEntry'
+    ProvisioningDocument:
+      type: object
+      description: Arbitrary JSON object representing the provisioning resource.
+      additionalProperties: true
+    ProvisioningCollectionEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+      required:
+      - id
+      - data
   securitySchemes:
     bearerAuth:
       type: http

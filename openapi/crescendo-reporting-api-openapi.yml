@@ -72,23 +72,17 @@ paths:
           $ref: '#/components/responses/Unavailable'
 components:
   parameters:
-    reportingLimit:
-      name: limit
+    reportingRange:
+      name: range
       in: query
       required: false
-      description: Max results per page. Default `1000`, max `5000`.
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 5000
-    tenantId:
-      name: tenantId
-      in: path
-      required: true
-      description: Tenant identifier.
+      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
       schema:
         type: string
+        enum:
+        - last_day
+        - last_week
+        - last_month
     reportingTo:
       name: to
       in: query
@@ -102,24 +96,6 @@ components:
         - type: string
           format: date-time
           description: ISO 8601 timestamp.
-    reportingCursor:
-      name: cursor
-      in: query
-      required: false
-      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
-      schema:
-        type: string
-    reportingRange:
-      name: range
-      in: query
-      required: false
-      description: Convenience range selector. If omitted and `from` is omitted, defaults to `last_day`.
-      schema:
-        type: string
-        enum:
-        - last_day
-        - last_week
-        - last_month
     reportingFrom:
       name: from
       in: query
@@ -133,7 +109,53 @@ components:
         - type: string
           format: date-time
           description: ISO 8601 timestamp.
+    reportingLimit:
+      name: limit
+      in: query
+      required: false
+      description: Max results per page. Default `1000`, max `5000`.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 5000
+    reportingCursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor returned in `cursor.next`. When provided, do not also supply `range`, `from`, or `to`.
+      schema:
+        type: string
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: Tenant identifier.
+      schema:
+        type: string
   responses:
+    Unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: Unauthenticated
+                message: Authorization header with Bearer token is required
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            example:
+              value:
+                code: BadRequest
+                message: Invalid request parameters
     Unavailable:
       description: Upstream dependency unavailable
       content:
@@ -156,29 +178,184 @@ components:
               value:
                 code: PermissionDenied
                 message: API key does not allow this operation
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: BadRequest
-                message: Invalid request parameters
-    Unauthenticated:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            example:
-              value:
-                code: Unauthenticated
-                message: Authorization header with Bearer token is required
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    ReportingCursor:
+      type: object
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+      required:
+      - next
+    VocConversationRow:
+      type: object
+      description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
+      properties:
+        ID:
+          type:
+          - string
+          - 'null'
+        TenantID:
+          type:
+          - string
+          - 'null'
+        Datetime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        DatetimeUTC:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        Duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        Direction:
+          type:
+          - string
+          - 'null'
+        Media:
+          type:
+          - string
+          - 'null'
+        AgentName:
+          type:
+          - string
+          - 'null'
+        AgentId:
+          type:
+          - string
+          - integer
+          - 'null'
+        AgentEmail:
+          type:
+          - string
+          - 'null'
+        CustomerName:
+          type:
+          - string
+          - 'null'
+        CustomerId:
+          type:
+          - string
+          - integer
+          - 'null'
+        CustomerEmail:
+          type:
+          - string
+          - 'null'
+        Groups:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Tags:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        Category:
+          type:
+          - string
+          - 'null'
+        Subcategory:
+          type:
+          - string
+          - 'null'
+        Tertiary:
+          type:
+          - string
+          - 'null'
+        CategoryExplanation:
+          type:
+          - string
+          - 'null'
+        CategoriesId:
+          type:
+          - string
+          - 'null'
+        Summary:
+          type:
+          - string
+          - 'null'
+        CSat:
+          type:
+          - number
+          - 'null'
+        CSatExplanation:
+          type:
+          - string
+          - 'null'
+        Sentiment:
+          type:
+          - number
+          - 'null'
+        SentimentExplanation:
+          type:
+          - string
+          - 'null'
+        Problems:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        KPIs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+        SourceSystem:
+          type:
+          - string
+          - 'null'
+        TicketId:
+          type:
+          - string
+          - integer
+          - 'null'
+        TicketUrl:
+          type:
+          - string
+          - 'null'
+    VocConversationReportingResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        cursor:
+          $ref: '#/components/schemas/ReportingCursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VocConversationRow'
+      required:
+      - total
+      - cursor
+      - data
     BotConversationReportingResponse:
       type: object
       properties:
@@ -346,183 +523,6 @@ components:
       - DatetimeUTC
       - EndDatetimeUTC
       - Duration
-    ReportingCursor:
-      type: object
-      properties:
-        next:
-          type:
-          - string
-          - 'null'
-      required:
-      - next
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    VocConversationRow:
-      type: object
-      description: Reporting row for a VOC conversation. Keys are optimized for reporting/exports.
-      properties:
-        ID:
-          type:
-          - string
-          - 'null'
-        TenantID:
-          type:
-          - string
-          - 'null'
-        Datetime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        DatetimeUTC:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        Duration:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        Direction:
-          type:
-          - string
-          - 'null'
-        Media:
-          type:
-          - string
-          - 'null'
-        AgentName:
-          type:
-          - string
-          - 'null'
-        AgentId:
-          type:
-          - string
-          - integer
-          - 'null'
-        AgentEmail:
-          type:
-          - string
-          - 'null'
-        CustomerName:
-          type:
-          - string
-          - 'null'
-        CustomerId:
-          type:
-          - string
-          - integer
-          - 'null'
-        CustomerEmail:
-          type:
-          - string
-          - 'null'
-        Groups:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        Tags:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        Category:
-          type:
-          - string
-          - 'null'
-        Subcategory:
-          type:
-          - string
-          - 'null'
-        Tertiary:
-          type:
-          - string
-          - 'null'
-        CategoryExplanation:
-          type:
-          - string
-          - 'null'
-        CategoriesId:
-          type:
-          - string
-          - 'null'
-        Summary:
-          type:
-          - string
-          - 'null'
-        CSat:
-          type:
-          - number
-          - 'null'
-        CSatExplanation:
-          type:
-          - string
-          - 'null'
-        Sentiment:
-          type:
-          - number
-          - 'null'
-        SentimentExplanation:
-          type:
-          - string
-          - 'null'
-        Problems:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties: true
-        KPIs:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties: true
-        SourceSystem:
-          type:
-          - string
-          - 'null'
-        TicketId:
-          type:
-          - string
-          - integer
-          - 'null'
-        TicketUrl:
-          type:
-          - string
-          - 'null'
-    VocConversationReportingResponse:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int64
-        cursor:
-          $ref: '#/components/schemas/ReportingCursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/VocConversationRow'
-      required:
-      - total
-      - cursor
-      - data
   securitySchemes:
     bearerAuth:
       type: http
